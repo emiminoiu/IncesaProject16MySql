@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.FontUIResource;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Button;
 import java.awt.SystemColor;
 import javax.swing.JTextField;
@@ -54,7 +57,7 @@ public class Home extends JFrame {
 			public void run() {
 				try {
 					 Home frame = new Home();
-					 frame.setUndecorated(true);
+					 //frame.setUndecorated(true);
 					 frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,6 +73,7 @@ public class Home extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	
 	public Home() throws Exception{
 		Home home = this;
 		setBackground(Color.WHITE);
@@ -145,8 +149,15 @@ public class Home extends JFrame {
         			// 4. Process the result set
         			try {
         				if(rs.next()) {
-        					        	    
-        					 JOptionPane.showMessageDialog(frame,"You are successfully logged");
+        					UIManager.put("OptionPane.buttonFont", new FontUIResource(new Font("ARIAL",Font.PLAIN,25)));
+                     		UIManager.put("OptionPane.minimumSize",new Dimension(400,200)); 
+                     		UIManager.put("OptionPane.messageFont", new FontUIResource(new Font(  
+                     		          "Arial", Font.BOLD, 18)));
+                     		UIManager.put("OptionPane.background", Color.GREEN);
+                     		UIManager.put("Button.background",Color.GREEN); 
+                     		UIManager.put("OptionPane.foreground",Color.GREEN);
+                     		     	    
+        					JOptionPane.showMessageDialog(frame,"You are successfully logged");
         					 //TypeFileSelection tsf = new TypeFileSelection();
         				//	 tsf.setVisible(true);
         					

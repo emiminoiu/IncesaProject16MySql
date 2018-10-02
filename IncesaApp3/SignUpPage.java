@@ -51,7 +51,7 @@ public class SignUpPage extends JFrame {
 	private JTextField userField;
 	private JTextField passField;
 	Random rand = new Random();
-
+  
 	int  Nr = rand.nextInt(50000) + 1;
 	/**
 	 * Launch the application.
@@ -89,7 +89,8 @@ public class SignUpPage extends JFrame {
 		contentPane.setLayout(null);
 		
 		
-		
+    	 
+
 		JLabel lbl_close = new JLabel("X");
 		lbl_close.addMouseListener(new MouseAdapter() {
 			@Override
@@ -153,7 +154,7 @@ public class SignUpPage extends JFrame {
             Connection con = null;
             try {
             	String username = userField.getText();
-            	String password = userField.getText();
+            	String password = passField.getText();
             	Nr++;
             	Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             	con = DriverManager.getConnection("jdbc:mysql://localhost:3306/eventmanagernew?user=student1&password=student1&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
