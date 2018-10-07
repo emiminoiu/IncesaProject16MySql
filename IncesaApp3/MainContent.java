@@ -62,6 +62,12 @@ public class MainContent extends JFrame{
 	JTextField time;
 	JTextField place;
 	JTextField description;
+	public String getUname()
+	{
+		return uname;
+	}
+	String uname = null;
+	
 	public String getDate()
 	{
 	return date.getText();
@@ -128,6 +134,7 @@ public class MainContent extends JFrame{
     public static Vector<String> myUsersId = new Vector<String>(); 
     public static Vector<String> message = new Vector<String>();
     public static Vector<String> mySenders = new Vector<String>();
+    public static Vector<String> mySendersids = new Vector<String>();
     private static final JLabel lblIncesaapp = new JLabel("IncesaApp");
 	private String pattern = "dd.MM.yyyy";
 	String dateInString =new SimpleDateFormat(pattern).format(new Date());
@@ -658,7 +665,15 @@ public class MainContent extends JFrame{
 	      		        String query2 = "select message from message where UserId = " + UserId;
 	      		        Statement stm1 = con.createStatement();
 	      			    ResultSet rs1 =  stm1.executeQuery(query2);
+	      			    String query3 = "select SenderId from message where UserId = " + UserId;
+	      			    Statement stm3 = con.createStatement();
+	      			    ResultSet rs3 =  stm3.executeQuery(query3);
 	      			    
+	      			    while(rs3.next())
+	      			    {
+	      			    	String obj = rs3.getString("SenderId");
+	      			    	mySendersids.addElement(obj);
+	      			    }
 	      			    while(rs1.next())
 	      			    {
 	      			        String obj = rs1.getString("message");
@@ -673,16 +688,36 @@ public class MainContent extends JFrame{
 	          		          "Arial", Font.BOLD, 18)));
 	          		  UIManager.put("OptionPane.background", Color.GREEN);
 	          		  UIManager.put("Button.background",Color.green); 
+	          		  int Nr = 0;
+	          		  
 	          		  for(String x : message)
 	          		  {
-	          			 JOptionPane.showOptionDialog(frame, x,
-	          					"Sender:", JOptionPane.YES_NO_CANCEL_OPTION,
+	          			String query4 = "select username from users where UserId = " + mySendersids.get(Nr);
+	      			    Statement stm4 = con.createStatement();
+	      			    ResultSet rs4 =  stm4.executeQuery(query4);
+	      			    
+	      			    while(rs4.next())
+	      			    {
+	      			    	 uname = rs4.getString("Username");
+	      			    	
+	      			    }
+	          			 int reply = JOptionPane.showOptionDialog(frame, x,
+	          					"FROM : " + uname, JOptionPane.YES_NO_CANCEL_OPTION,
 	          				    JOptionPane.QUESTION_MESSAGE,
 	          				    null,
 	          				    options,
 	          				    options[2]);
 	          		   // JOptionPane.showConfirmDialog(null,  x, "IncesaApp3", JOptionPane.OK_CANCEL_OPTION,
 	                    //      JOptionPane.PLAIN_MESSAGE);
+	          			Nr++;
+	          			
+	          			if(reply == JOptionPane.NO_OPTION)
+	          			{
+	          				ReplyPage rpage;
+	        				rpage = new ReplyPage(home,mc);
+							rpage.setVisible(true);
+	          		     
+	          			}
 	          		  }
 	      			    System.out.println(message);
 	      			} catch (SQLException e1) {
